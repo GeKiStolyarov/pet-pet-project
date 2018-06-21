@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
+import { Route } from 'react-router-dom';
+import AdminPage from './routes/AdminPage';
+import AuthPage from './routes/AuthPage';
 
 class Root extends Component {
   static propTypes = {
 
   };
 
-  state = {
-
-  };
-
   render() {
     return (
       <div>
-        <h1>Hello</h1>
+        <Route path="/admin" component={AdminPage} />
+        <Route path="/auth" component={AuthPage} />
       </div>
     );
   }
