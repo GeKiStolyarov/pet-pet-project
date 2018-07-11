@@ -1,14 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-function Loader(props) {
+export default function Loader() {
   return (
     <h2>Loading ...</h2>
   );
 }
-
-Loader.propTypes = {
-
-};
-
-export default Loader;
