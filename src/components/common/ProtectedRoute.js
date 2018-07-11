@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import { moduleName } from '../../ducks/auth';
 import UnAuthorized from './UnAuthorized';
 
@@ -23,6 +23,6 @@ class ProtectedRoute extends Component {
   }
 }
 
-export default connect(state => ({
+export default withRouter(connect(state => ({
   authorized: !!state[moduleName].user,
-}))(ProtectedRoute);
+}))(ProtectedRoute));

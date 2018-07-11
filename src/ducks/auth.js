@@ -13,6 +13,7 @@ export const moduleName = 'auth';
 export const SIGN_UP_REQUEST = `${appName}/${moduleName}/SIGN_UP_REQUEST`;
 export const SIGN_UP_SUCCESS = `${appName}/${moduleName}/SIGN_UP_SUCCESS`;
 export const SIGN_UP_ERROR = `${appName}/${moduleName}/SIGN_UP_ERROR`;
+export const SIGN_IN_SUCCESS = `${appName}/${moduleName}/SIGN_IN_SUCCESS`;
 
 // Reducer
 export default function reducer(state = new ReducerRecord(), action) {
@@ -32,6 +33,12 @@ export default function reducer(state = new ReducerRecord(), action) {
       return state
         .set('loading', false)
         .set('error', error);
+
+    case SIGN_IN_SUCCESS:
+      return state
+        .set('loading', false)
+        .set('user', payload.user)
+        .set('error', null);
 
     default:
       return state;
@@ -54,3 +61,13 @@ export function signUp(email, password) {
       }));
   };
 }
+
+firebase.auth().onAuthStateChanged((user) => {
+  // TODO "I promise to delete this"
+  const store = require('../redux').default;
+
+  store.dispatch({
+    type: SIGN_IN_SUCCESS,
+    payload: { user },
+  });
+});
