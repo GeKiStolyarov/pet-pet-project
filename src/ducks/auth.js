@@ -1,6 +1,6 @@
 import firebase from 'firebase';
 import { Record } from 'immutable';
-import { all, put, call, take } from 'redux-saga/effects';
+import { all, put, call, cps, take } from 'redux-saga/effects';
 import { appName } from '../config';
 
 
@@ -101,8 +101,22 @@ export function signUp(email, password) {
 }
 */
 
+export const watchStatusChange = function* () {
+  const auth = firebase.auth();
+
+  try {
+    yield cps([auth, auth.onAuthStateChanged]);
+  } catch (user) {
+    yield put({
+      type: SIGN_IN_SUCCESS,
+      payload: { user },
+    });
+  }
+};
+
+// TODO "I promise to delete this"
+/*
 firebase.auth().onAuthStateChanged((user) => {
-  // TODO "I promise to delete this"
   const store = require('../redux').default;
 
   store.dispatch({
@@ -110,9 +124,11 @@ firebase.auth().onAuthStateChanged((user) => {
     payload: { user },
   });
 });
+*/
 
 export const saga = function* () {
   yield all([
     signUpSaga(),
+    watchStatusChange(),
   ]);
 };
