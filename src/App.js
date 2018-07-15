@@ -5,6 +5,7 @@ import Root from './components/Root';
 import store from './redux';
 import history from './history';
 import './config';
+import './mocks';
 
 class App extends Component {
   render() {
